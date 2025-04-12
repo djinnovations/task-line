@@ -16,7 +16,6 @@ object AndroidX {
     const val lifecycleCompose = "androidx.lifecycle:lifecycle-runtime-compose:$lifecycleVersion"
     const val navigationFragmentKtx = "androidx.navigation:navigation-fragment-ktx:$navigationVersion"
     const val navigationUiKtx = "androidx.navigation:navigation-ui-ktx:$navigationVersion"
-    const val composeNavigation = "androidx.navigation:navigation-compose:$navigationVersion"
     const val navigationRuntime = "androidx.navigation:navigation-runtime-ktx:$navigationVersion"
     const val preferencesKtx = "androidx.preference:preference-ktx:1.2.1"
     const val recyclerView = "androidx.recyclerview:recyclerview:1.3.2"
@@ -155,6 +154,7 @@ object JetpackCompose {
     const val composeFoundation = "androidx.compose.foundation:foundation"
     const val composeFoundationLayout = "androidx.compose.foundation:foundation-layout"
     const val composeUi = "androidx.compose.ui:ui"
+    const val composeNavigation = "androidx.navigation:navigation-compose:"
     const val composeUiGraphics = "androidx.compose.ui:ui-graphics"
     const val composePreview = "androidx.compose.ui:ui-tooling-preview"
     const val composeTooling = "androidx.compose.ui:ui-tooling"
@@ -167,6 +167,7 @@ object JetpackCompose {
     const val composeCoil = "io.coil-kt:coil-compose:2.6.0"
     const val composeBlur = "com.github.skydoves:cloudy:0.1.2"
     const val animation = "androidx.compose.animation:animation-android:1.6.7"
+    const val composeMaterialIcons = "androidx.compose.material:material-icons-extended:1.2.1"
 
     //https://github.com/skydoves/Balloon#balloon-in-jetpack-compose-1
     const val balloon = "com.github.skydoves:balloon-compose:1.6.11"

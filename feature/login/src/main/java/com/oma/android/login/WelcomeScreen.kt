@@ -27,7 +27,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun AppWelcomeScreen(modifier: Modifier) {
+fun AppWelcomeScreen(
+    modifier: Modifier = Modifier,
+    onLogin: () -> Unit,
+    onCreateAccount: () -> Unit
+) {
     // Replace with your image later
     val backgroundImage = painterResource(id = R.drawable.img_welcome_background)
 
@@ -69,7 +73,7 @@ fun AppWelcomeScreen(modifier: Modifier) {
                         .padding(vertical = 4.dp)
                         .clip(RoundedCornerShape(10.dp)),
                     shape = RoundedCornerShape(size = 10.dp),
-                    onClick = { },
+                    onClick = onLogin,
                     colors = ButtonDefaults.buttonColors(containerColor = Color.White.copy(alpha = 0.2f)),
                 ) {
                     Text(
@@ -80,7 +84,7 @@ fun AppWelcomeScreen(modifier: Modifier) {
 
                 Spacer(modifier = Modifier.height(dimensionResource(com.intuit.sdp.R.dimen._8sdp)))
 
-                TextButton(onClick = { }) {
+                TextButton(onClick = onCreateAccount) {
                     Text(
                         text = "Create an account",
                         style = MaterialTheme.typography.labelMedium

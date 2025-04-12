@@ -34,4 +34,5 @@ open class DesignSystemBaseColor(
     val Boulder: Color = Color(0xFF767676),
     val Onahau: Color = Color(0xFFD0F7FF),
     val SilverChalice: Color = Color(0xFFB0B0B0),
+    val ChateauGreen: Color = Color(0xFF3FA15D),
 )
