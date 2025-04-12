@@ -1,0 +1,67 @@
+# Ignore Android Studio specific files
+.idea/
+.idea/**/workspace.xml
+.idea/**/tasks.xml
+.idea/**/gradle.xml
+.idea/**/libraries/
+.idea/**/caches/
+.idea/**/assetWizardSettings.xml
+.idea/**/codeStyles/Project.xml
+.idea/dictionaries/
+.idea/httpRequests/
+
+# Ignore build folders
+/build/
+/app/build/
+/**/build/
+
+# Ignore local configuration files
+local.properties
+
+# Ignore Gradle files
+.gradle/
+/**/gradle-wrapper.jar
+gradle-app.setting
+
+# Ignore signing keys and sensitive files
+**/key.jks
+**/*.keystore
+
+# Ignore log files
+*.log
+
+# Ignore miscellaneous files
+*.iml
+*.hprof
+*.orig
+.DS_Store
+*.swp
+*.swo
+
+# Ignore test-related output
+**/test-results/
+**/test-output/
+
+# Ignore generated files
+*.apk
+*.ap_
+*.ipk
+output.json
+captures/
+
+# Ignore Android lint reports
+lint/intermediates/
+lint/generated/
+lint/reports/
+lint/lint-results*.xml
+lint/lint-results*.html
+
+# Ignore crashlytics and Firebase files
+crashlytics.properties
+fabric.properties
+
+# Ignore dependency update cache
+dependencyUpdates/
+
+# Ignore the Android Studio caches folder
+.caches/

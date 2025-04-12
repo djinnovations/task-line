@@ -1,0 +1,104 @@
+apply plugin: 'com.android.library'
+apply plugin: 'org.jetbrains.kotlin.android'
+apply plugin: 'kotlin-parcelize'
+apply plugin: 'com.google.devtools.ksp'
+apply plugin: 'com.google.dagger.hilt.android'
+
+android {
+    compileSdkVersion BuildInfo.compileSdk
+
+    defaultConfig {
+        minSdk BuildInfo.minSdk
+        targetSdkVersion BuildInfo.targetSdk
+
+        resConfigs "en"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles("consumer-rules.pro")
+    }
+
+    buildTypes {
+        release {
+            buildConfigField "String", "BASE_URL", '"https://blah-blah.com"'
+        }
+        staging {
+            initWith debug
+            matchingFallbacks = ['debug']
+            buildConfigField "String", "BASE_URL", '"https://blah-blah.com"'
+        }
+        debug {
+            // Debug and Release point to same end points, difference is in signing
+            buildConfigField "String", "BASE_URL", '"https://blah-blah.com"'
+        }
+    }
+
+    sourceSets {
+        main {
+            manifest.srcFile 'AndroidManifest.xml'
+            aidl.srcDirs = ['src/main/java']
+            res.srcDirs = ['res']
+            assets.srcDirs = ['assets']
+        }
+
+        google {
+            aidl.srcDirs = ['src/google/java']
+        }
+
+        // Move the build types to build-types/<type>
+        // For instance, build-types/debug/java, build-types/debug/AndroidManifest.xml, ...
+        // This moves them out of them default location under src/<type>/... which would
+        // conflict with src/ being used by the main source set.
+        // Adding new build types or product flavors should be accompanied
+        // by a similar customization.
+        debug.setRoot('build-types/debug')
+        debug.setRoot('build-types/staging')
+        release.setRoot('build-types/release')
+    }
+
+    flavorDimensions "store"
+
+    productFlavors {
+        google {
+            dimension "store"
+            BuildInfo.kit = "gms"
+        }
+    }
+
+    buildFeatures {
+        dataBinding true
+        viewBinding true
+        buildConfig true
+        compose true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_9
+        targetCompatibility JavaVersion.VERSION_1_9
+    }
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_9.toString()
+    }
+}
+
+dependencies {
+    implementation(AndroidX.activityKtx)
+    implementation(AndroidX.appCompat)
+    implementation(AndroidX.coreKtx)
+    implementation(AndroidX.viewModelKtx)
+    implementation(AndroidX.runtimeKtx)
+    implementation(AndroidX.dataStorePreferences)
+
+    implementation(Material.materialDesign)
+
+    // Kotlin Dependencies
+    implementation(Kotlin.kotlin)
+    implementation(Kotlin.coroutines)
+    implementation(Kotlin.coroutinesPlayServices)
+
+    implementation(MiscSdks.gson)
+
+    implementation(AndroidX.workRuntime)
+    // Hilt
+    implementation(Hilt.daggerHiltAndroid)
+    implementation(Hilt.hiltWorker)
+    ksp(Hilt.daggerHiltCompiler)
+}
