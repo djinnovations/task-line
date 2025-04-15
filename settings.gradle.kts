@@ -23,3 +23,5 @@ rootProject.name = "Task Line"
 include(":app")
 include(":composeui")
 include(":feature:login")
+include(":base")
+include(":data:utils")

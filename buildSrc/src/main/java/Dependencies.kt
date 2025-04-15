@@ -21,7 +21,7 @@ object AndroidX {
     const val recyclerView = "androidx.recyclerview:recyclerview:1.3.2"
     const val roomRuntime = "androidx.room:room-runtime:2.6.1"
     const val roomKtx = "androidx.room:room-ktx:2.6.1"
-    const val roomKaptCompiler = "androidx.room:room-compiler:2.6.1"
+    const val roomCompiler = "androidx.room:room-compiler:2.6.1"
     const val workRuntime = "androidx.work:work-runtime-ktx:2.9.0"
 
     // Splash Screen (https://developer.android.com/develop/ui/views/launch/splash-screen)
