@@ -1,4 +1,4 @@
-package com.oma.android.login
+package com.oma.android.login.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -25,6 +25,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.oma.android.login.R
 
 @Composable
 fun AppWelcomeScreen(

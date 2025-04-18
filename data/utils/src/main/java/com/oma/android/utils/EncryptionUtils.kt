@@ -9,7 +9,9 @@ import javax.crypto.KeyGenerator
 import javax.crypto.SecretKey
 import javax.crypto.spec.GCMParameterSpec
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class EncryptionUtils @Inject constructor() {
     companion object {
         private const val KEY_ALIAS = "aes_key_alias"

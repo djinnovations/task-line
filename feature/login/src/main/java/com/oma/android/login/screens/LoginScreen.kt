@@ -1,4 +1,4 @@
-package com.oma.android.login
+package com.oma.android.login.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -38,11 +38,12 @@ import com.oma.android.composeui.shape.CurvedBottomShape
 import com.oma.android.composeui.textinputfield.RoundedInputField
 import com.oma.android.composeui.theme.Primary
 import com.oma.android.composeui.theme.Themer
+import com.oma.android.login.R
 
 @Composable
 fun LoginScreen(
     onBack: () -> Unit = {},
-    onLoginClick: () -> Unit = {}
+    onLoginClick: (String, String) -> Unit
 ) {
     val email = remember { mutableStateOf("") }
     val password = remember { mutableStateOf("") }
@@ -134,7 +135,9 @@ fun LoginScreen(
                     .padding(horizontal = 4.dp)
                     .fillMaxWidth()
                     .padding(vertical = 4.dp),
-                onClick = { },
+                onClick = {
+                    onLoginClick.invoke(email.value, password.value)
+                },
                 colors = ButtonDefaults.buttonColors(containerColor = Primary),
             ) {
                 Text(

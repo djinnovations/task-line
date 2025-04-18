@@ -20,8 +20,14 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "Task Line"
+include(":base")
 include(":app")
 include(":composeui")
+
 include(":feature:login")
-include(":base")
+
 include(":data:utils")
+include(":data:login-data")
+
+include(":data:roomdb")
+include(":feature:dashboard")

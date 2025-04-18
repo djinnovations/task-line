@@ -48,6 +48,8 @@ android {
 dependencies {
     "implementation"(project(Modules.composeUi))
     "implementation"(project(Modules.login))
+    "implementation"(project(Modules.base))
+    "implementation"(project(Modules.dashboard))
 
     // Test
     AndroidTest.dependencies.forEach { androidTestImplementation(it) }

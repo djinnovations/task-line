@@ -7,17 +7,15 @@ apply {
 }
 
 plugins {
-    id("org.jetbrains.kotlin.plugin.compose")
+    id("com.google.devtools.ksp")
 }
 
 android {
-    namespace = "com.oma.android.login"
-
-    buildFeatures.compose = true
+    namespace = "com.oma.android.login.data"
 }
 
 dependencies {
+    "implementation"(project(Modules.roomDb))
+    "implementation"(project(Modules.dataUtils))
     "implementation"(project(Modules.base))
-    "implementation"(project(Modules.composeUi))
-    "implementation"(project(Modules.loginData))
 }

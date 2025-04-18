@@ -40,6 +40,7 @@ dependencies {
     api(JetpackCompose.balloon)
     api(JetpackCompose.composeMaterialIcons)
     api(JetpackCompose.composeNavigation)
+    api(JetpackCompose.hiltCompose)
     api(AndroidX.navigationRuntime)
     api(AndroidX.navigationUiKtx)
     api(AndroidX.navigationFragmentKtx)

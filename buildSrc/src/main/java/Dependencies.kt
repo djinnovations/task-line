@@ -125,7 +125,6 @@ object Hilt {
 //
 //    // https://developer.android.com/training/dependency-injection/hilt-jetpack
 //    const val hiltFragment = "androidx.hilt:hilt-navigation-fragment:1.2.0"
-//    const val hiltCompose = "androidx.hilt:hilt-navigation-compose:1.2.0"
 }
 
 object Paging {
@@ -168,6 +167,7 @@ object JetpackCompose {
     const val composeBlur = "com.github.skydoves:cloudy:0.1.2"
     const val animation = "androidx.compose.animation:animation-android:1.6.7"
     const val composeMaterialIcons = "androidx.compose.material:material-icons-extended:1.2.1"
+    const val hiltCompose = "androidx.hilt:hilt-navigation-compose:1.2.0"
 
     //https://github.com/skydoves/Balloon#balloon-in-jetpack-compose-1
     const val balloon = "com.github.skydoves:balloon-compose:1.6.11"

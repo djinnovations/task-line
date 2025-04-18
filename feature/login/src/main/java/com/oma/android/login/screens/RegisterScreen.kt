@@ -1,4 +1,4 @@
-package com.oma.android.login
+package com.oma.android.login.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -35,8 +35,7 @@ import com.oma.android.composeui.theme.Primary
 import com.oma.android.composeui.theme.Themer
 
 @Composable
-fun RegisterScreen(modifier: Modifier = Modifier,
-                   onBack: () -> Unit) {
+fun RegisterScreen(onBack: () -> Unit, onRegister:(String, String, String) -> Unit) {
     val email = remember { mutableStateOf("") }
     val password = remember { mutableStateOf("") }
     val fullName = remember { mutableStateOf("") }
@@ -117,7 +116,9 @@ fun RegisterScreen(modifier: Modifier = Modifier,
                 .padding(horizontal = 4.dp)
                 .fillMaxWidth()
                 .padding(vertical = 4.dp),
-            onClick = { },
+            onClick = {
+                onRegister.invoke(fullName.value, email.value, password.value)
+            },
             colors = ButtonDefaults.buttonColors(containerColor = Primary),
         ) {
             Text(

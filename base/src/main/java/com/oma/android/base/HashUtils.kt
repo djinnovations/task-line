@@ -10,4 +10,9 @@ class HashUtils @Inject constructor() {
         val bytes = MessageDigest.getInstance("SHA-256").digest(password.toByteArray())
         return bytes.joinToString("") { "%02x".format(it) }
     }
+
+    fun verifyPassword(inputPassword: String, storedHash: String): Boolean {
+        val hashedInput = hashPassword(inputPassword)
+        return hashedInput == storedHash
+    }
 }

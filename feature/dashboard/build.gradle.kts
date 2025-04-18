@@ -11,7 +11,7 @@ plugins {
 }
 
 android {
-    namespace = "com.oma.android.login"
+    namespace = "com.oma.android.dashboard"
 
     buildFeatures.compose = true
 }
@@ -19,5 +19,4 @@ android {
 dependencies {
     "implementation"(project(Modules.base))
     "implementation"(project(Modules.composeUi))
-    "implementation"(project(Modules.loginData))
 }
