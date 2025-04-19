@@ -3,6 +3,7 @@ apply plugin: 'org.jetbrains.kotlin.android'
 apply plugin: 'kotlin-parcelize'
 apply plugin: 'com.google.devtools.ksp'
 apply plugin: 'com.google.dagger.hilt.android'
+apply plugin: 'kotlinx-serialization'
 
 android {
     compileSdkVersion BuildInfo.compileSdk
@@ -85,17 +86,17 @@ dependencies {
     implementation(AndroidX.viewModelKtx)
     implementation(AndroidX.runtimeKtx)
     implementation(AndroidX.dataStorePreferences)
-
+    implementation(AndroidX.workRuntime)
     implementation(Material.materialDesign)
 
     // Kotlin Dependencies
     implementation(Kotlin.kotlin)
     implementation(Kotlin.coroutines)
     implementation(Kotlin.coroutinesPlayServices)
+    implementation(Kotlin.serializationJson)
 
     implementation(MiscSdks.gson)
 
-    implementation(AndroidX.workRuntime)
     // Hilt
     implementation(Hilt.daggerHiltAndroid)
     implementation(Hilt.hiltWorker)

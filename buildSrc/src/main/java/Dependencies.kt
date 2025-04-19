@@ -42,6 +42,7 @@ object Kotlin {
     const val coroutinesPlayServices =
         "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.7.3"
     const val collectionImmutable = "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.8"
+    const val serializationJson = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0"
 }
 
 object Google {
