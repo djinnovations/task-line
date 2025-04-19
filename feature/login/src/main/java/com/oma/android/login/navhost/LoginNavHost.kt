@@ -9,7 +9,6 @@ import com.oma.android.login.route.LoginRoute
 import com.oma.android.login.route.RegisterRoute
 import com.oma.android.login.route.ScreenRoutes
 import com.oma.android.login.screens.AppWelcomeScreen
-import com.oma.android.login.screens.LoginScreen
 
 @Composable
 fun LoginNavHost(viewModel: AuthViewModel) {
@@ -41,3 +40,4 @@ fun LoginNavHost(viewModel: AuthViewModel) {
         }
     }
 }
+

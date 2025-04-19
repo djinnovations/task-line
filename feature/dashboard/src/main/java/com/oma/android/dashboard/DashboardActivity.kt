@@ -15,6 +15,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.oma.android.composeui.theme.TaskLineTheme
+import com.oma.android.dashboard.screen.DashboardScreen
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -28,9 +29,7 @@ class DashboardActivity : ComponentActivity() {
         collectEvents()
         setContent {
             TaskLineTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { _ ->
-                    Greeting("world")
-                }
+                DashboardScreen()
             }
         }
     }
