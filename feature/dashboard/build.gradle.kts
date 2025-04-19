@@ -19,4 +19,5 @@ android {
 dependencies {
     "implementation"(project(Modules.base))
     "implementation"(project(Modules.composeUi))
+    "implementation"(project(Modules.domainModel))
 }

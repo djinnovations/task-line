@@ -9,15 +9,13 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.oma.android.composeui.theme.Themer
 import com.oma.android.dashboard.route.ScreenRoutes
+import com.oma.android.dashboard.screen.HomeScreen
 
 @Composable
 fun DashboardNavHost(modifier: Modifier, navController: NavHostController) {
     NavHost(navController, startDestination = ScreenRoutes.Home.route, modifier) {
         composable(ScreenRoutes.Home.route) {
-            Text(
-                text = "Home",
-                style = MaterialTheme.typography.titleLarge.copy(color = Themer.colors.ChateauGreen),
-            )
+            HomeScreen()
         }
         composable(ScreenRoutes.Project.route) {
             Text(

@@ -31,3 +31,4 @@ include(":data:login-data")
 
 include(":data:roomdb")
 include(":feature:dashboard")
+include(":domainmodel")

@@ -2,6 +2,8 @@ object Modules {
     const val app = ":app"
     const val composeUi = ":composeui"
     const val base = ":base"
+    const val domainModel = ":domainmodel"
+
     const val login = ":feature:login"
     const val dashboard = ":feature:dashboard"
 
