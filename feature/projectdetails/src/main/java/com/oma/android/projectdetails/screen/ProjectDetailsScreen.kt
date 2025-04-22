@@ -24,7 +24,7 @@ import com.oma.android.projectdetails.component.ProjectDetailsTopSection
 import com.oma.android.projectdetails.component.TaskCategoryLazyRow
 
 @Composable
-fun ProjectScreen(
+fun ProjectDetailsScreen(
     scaffoldPadding: PaddingValues,
     projectItem: ProjectItem,
     onBack: () -> Unit = {},

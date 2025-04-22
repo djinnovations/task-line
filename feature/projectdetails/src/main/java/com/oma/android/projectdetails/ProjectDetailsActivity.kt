@@ -12,13 +12,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import com.oma.android.composeui.theme.TaskLineTheme
-import com.oma.android.projectdetails.screen.ProjectScreen
+import com.oma.android.projectdetails.navhost.ProjectDetailsNavHost
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class ProjectDetailsActivity : ComponentActivity() {
@@ -33,20 +29,14 @@ class ProjectDetailsActivity : ComponentActivity() {
         setContent {
             TaskLineTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { padding ->
-                    ProjectScreen(padding, projectItem = projectDetailsSharedViewModel.getProjectData()!!) {
-
-                    }
+                    ProjectDetailsNavHost(padding, projectDetailsSharedViewModel.getProjectData()!!)
                 }
             }
         }
     }
 
     private fun collectEvents() {
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
 
-            }
-        }
     }
 }
 
