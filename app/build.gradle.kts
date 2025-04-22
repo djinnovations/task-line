@@ -50,6 +50,7 @@ dependencies {
     "implementation"(project(Modules.login))
     "implementation"(project(Modules.base))
     "implementation"(project(Modules.dashboard))
+    "implementation"(project(Modules.projectDetails))
 
     // Test
     AndroidTest.dependencies.forEach { androidTestImplementation(it) }

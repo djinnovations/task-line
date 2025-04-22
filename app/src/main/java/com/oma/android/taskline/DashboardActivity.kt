@@ -3,35 +3,28 @@ package com.oma.android.taskline
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.oma.android.base.main.UiEvent
 import com.oma.android.base.navigation.Destination
 import com.oma.android.composeui.theme.TaskLineTheme
-import com.oma.android.login.AuthViewModel
-import com.oma.android.login.navhost.LoginNavHost
+import com.oma.android.dashboard.DashboardSharedViewModel
+import com.oma.android.dashboard.screen.DashboardScreen
+import com.oma.android.projectdetails.ProjectDetailsActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class MainActivity : ComponentActivity() {
+class DashboardActivity : ComponentActivity() {
 
-    // Shared across all Composables inside this Activity
-    private val authViewModel: AuthViewModel by viewModels()
+    private val dashboardSharedViewModel: DashboardSharedViewModel by viewModels()
 
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,9 +33,7 @@ class MainActivity : ComponentActivity() {
         collectEvents()
         setContent {
             TaskLineTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { _ ->
-                    LoginNavHost(authViewModel)
-                }
+                DashboardScreen(dashboardSharedViewModel)
             }
         }
     }
@@ -50,21 +41,17 @@ class MainActivity : ComponentActivity() {
     private fun collectEvents() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                authViewModel.uiEvent.onEach { event ->
-                    when(event) {
-                        is UiEvent.NotifyMessage -> {
-                            Toast.makeText(this@MainActivity, event.message, Toast.LENGTH_SHORT).show()
-                        }
-
+                dashboardSharedViewModel.uiEvent.onEach { event ->
+                    when (event) {
                         is UiEvent.NavigateToActivity -> {
                             val destination = when (event.destination) {
-                                Destination.Dashboard -> DashboardActivity::class.java
+                                Destination.ProjectDetails -> ProjectDetailsActivity::class.java
                                 else -> {
                                     null
                                 }
                             }
                             destination?.also {
-                                val intent = Intent(this@MainActivity, it).apply {
+                                val intent = Intent(this@DashboardActivity, it).apply {
                                     event.extras?.let { putExtras(it) }
                                     event.flags?.let { addFlags(it) }
                                 }
@@ -77,21 +64,5 @@ class MainActivity : ComponentActivity() {
                 }.launchIn(lifecycleScope)
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    TaskLineTheme {
-        Greeting("Android")
     }
 }

@@ -25,7 +25,7 @@ import com.oma.android.composeui.theme.Themer
 import com.oma.android.domainmodel.Status
 
 @Composable
-fun TaskItem(task: String) {
+fun HomeScreenTaskItem(task: String) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
