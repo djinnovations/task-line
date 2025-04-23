@@ -34,6 +34,7 @@ import androidx.compose.ui.unit.dp
 import com.oma.android.composeui.theme.Secondary
 import com.oma.android.composeui.theme.Themer
 import com.oma.android.dashboard.component.DateSelector
+import com.oma.android.dashboard.component.ProjectFieldTimesheet
 import com.oma.android.dashboard.component.TimeSelector
 import java.util.Calendar
 
@@ -50,6 +51,7 @@ fun AddTimesheetScreen() {
                 Calendar.getInstance().get(Calendar.MINUTE)
     }
     var selectedDate = remember { "" }
+    var selectedProject = remember { "" }
 
     Card(
         modifier = Modifier
@@ -76,37 +78,13 @@ fun AddTimesheetScreen() {
                     .clip(RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp))
             )
 
-            // Choose Project Field (opens modal)
-            Row(
+            ProjectFieldTimesheet(
                 modifier = Modifier
-                    .clickable {
-                        projectSelectionRequest = !projectSelectionRequest
-                    }
                     .fillMaxWidth()
                     .background(color = Themer.colors.FillSecondary)
-                    .padding(horizontal = 10.dp, vertical = 10.dp),
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
-                verticalAlignment = Alignment.CenterVertically,
+                    .padding(horizontal = 10.dp, vertical = 10.dp)
             ) {
-                Icon(
-                    Icons.Default.Architecture, contentDescription = "Project",
-                    tint = Themer.colors.Black100
-                )
-                Text(
-                    "Project: ",
-                    style = MaterialTheme.typography.labelMedium,
-                    color = Themer.colors.TextAlternate
-                )
-                Text(
-                    text = projectSelected,
-                    style = MaterialTheme.typography.labelMedium,
-                    color = Themer.colors.TextAlternate
-                )
-                Spacer(Modifier.weight(1f, true))
-                Icon(
-                    Icons.AutoMirrored.Default.ArrowRight, contentDescription = "Project",
-                    tint = Themer.colors.Black100
-                )
+                selectedProject = it
             }
 
             // Choose Task Field (opens modal)
