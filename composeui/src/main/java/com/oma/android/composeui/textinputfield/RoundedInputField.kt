@@ -23,9 +23,11 @@ fun RoundedInputField(
     value: String,
     onValueChange: (String) -> Unit,
     placeholder: String,
-    icon: ImageVector,
+    icon: ImageVector? = null,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     isPassword: Boolean = false,
+    singleLine: Boolean = true,
+    minLines: Int = 1,
     trailingIcon: @Composable (() -> Unit)? = null
 ) {
     OutlinedTextField(
@@ -39,11 +41,20 @@ fun RoundedInputField(
                 style = MaterialTheme.typography.labelMedium.copy(color = Themer.colors.ChateauGreen)
             )
         },
-        leadingIcon = { Icon(icon, contentDescription = null, tint = Themer.colors.ChateauGreen) },
+        leadingIcon = if (icon != null) {
+            {
+                Icon(
+                    imageVector = icon,
+                    contentDescription = null,
+                    tint = Themer.colors.ChateauGreen
+                )
+            }
+        } else null,
         trailingIcon = trailingIcon,
         visualTransformation = if (isPassword) PasswordVisualTransformation() else VisualTransformation.None,
         keyboardOptions = keyboardOptions,
-        singleLine = true,
+        singleLine = singleLine,
+        minLines = minLines,
         shape = RoundedCornerShape(16.dp),
         colors = OutlinedTextFieldDefaults.colors(
             focusedBorderColor = Themer.colors.ChateauGreen,

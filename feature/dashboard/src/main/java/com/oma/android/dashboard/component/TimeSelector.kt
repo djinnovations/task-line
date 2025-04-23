@@ -21,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.oma.android.composeui.theme.Themer
+import java.util.Locale
 
 @Composable
 fun TimeSelector(
@@ -64,7 +65,12 @@ fun TimeSelector(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
-                "${selectedTime.first}:${selectedTime.second}",
+                text = String.format(
+                    Locale.getDefault(),
+                    "%02d:%02d",
+                    selectedTime.first,
+                    selectedTime.second
+                ),
                 style = MaterialTheme.typography.labelLarge,
                 color = Themer.colors.TextAlternate
             )
