@@ -6,22 +6,34 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.oma.android.composeui.navhost.AnimatedNavHost
-import com.oma.android.domainmodel.projectdetails.ProjectItem
+import com.oma.android.projectdetails.ProjectDetailsSharedViewModel
+import com.oma.android.projectdetails.route.ProjectDetailsRoute
 import com.oma.android.projectdetails.route.ScreenRoutes
-import com.oma.android.projectdetails.screen.ProjectDetailsScreen
+import com.oma.android.projectdetails.route.TaskDetailsRoute
 
 @Composable
-fun ProjectDetailsNavHost(
+internal fun ProjectDetailsNavHost(
     scaffoldPadding: PaddingValues,
-    projectItem: ProjectItem
+    viewModel: ProjectDetailsSharedViewModel
 ) {
     val backPressedDispatcher = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
     val navController = rememberNavController()
-    AnimatedNavHost(navController = navController, startDestination = ScreenRoutes.ProjectDetails.route) {
+    AnimatedNavHost(
+        navController = navController,
+        startDestination = ScreenRoutes.ProjectDetails.route
+    ) {
         composable(ScreenRoutes.ProjectDetails.route) {
-            ProjectDetailsScreen(scaffoldPadding, projectItem = projectItem) {
+            ProjectDetailsRoute(
+                scaffoldPadding,
+                navController,
+                viewModel
+            ) {
                 backPressedDispatcher?.onBackPressed()
             }
+        }
+
+        composable(ScreenRoutes.TaskDetails.route) {
+            TaskDetailsRoute(scaffoldPadding, navController, viewModel)
         }
     }
 }

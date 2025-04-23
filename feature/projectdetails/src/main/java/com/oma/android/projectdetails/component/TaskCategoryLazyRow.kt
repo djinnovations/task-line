@@ -13,7 +13,11 @@ import com.oma.android.domainmodel.projectdetails.TaskItem
 import kotlinx.collections.immutable.toPersistentList
 
 @Composable
-fun TaskCategoryLazyRow(scaffoldPadding: PaddingValues, tasksByStatus: Map<Status, List<TaskItem>>) {
+fun TaskCategoryLazyRow(
+    scaffoldPadding: PaddingValues,
+    tasksByStatus: Map<Status, List<TaskItem>>,
+    onTaskItemClicked: (TaskItem) -> Unit
+) {
     LazyRow(
         modifier = Modifier.padding(
             top = 10.dp,
@@ -28,9 +32,10 @@ fun TaskCategoryLazyRow(scaffoldPadding: PaddingValues, tasksByStatus: Map<Statu
             if (tasksForStatus.isNotEmpty()) {
                 item {
                     TaskStatusColumn(
+                        modifier = Modifier.width(300.dp),
                         status = status,
                         tasks = tasksForStatus.toPersistentList(),
-                        modifier = Modifier.width(300.dp)
+                        onTaskItemClicked = onTaskItemClicked
                     )
                 }
             }

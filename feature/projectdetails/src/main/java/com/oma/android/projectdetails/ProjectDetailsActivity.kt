@@ -29,7 +29,10 @@ class ProjectDetailsActivity : ComponentActivity() {
         setContent {
             TaskLineTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { padding ->
-                    ProjectDetailsNavHost(padding, projectDetailsSharedViewModel.getProjectData()!!)
+                    ProjectDetailsNavHost(
+                        padding,
+                        projectDetailsSharedViewModel
+                    )
                 }
             }
         }

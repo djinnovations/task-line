@@ -1,7 +1,9 @@
 package com.oma.android.projectdetails.component
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -22,9 +24,10 @@ import kotlinx.collections.immutable.ImmutableList
 
 @Composable
 fun TaskStatusColumn(
+    modifier: Modifier = Modifier,
     status: Status,
     tasks: ImmutableList<TaskItem>,
-    modifier: Modifier = Modifier
+    onTaskItemClicked: (TaskItem) -> Unit
 ) {
     Column(
         modifier = modifier
@@ -46,7 +49,9 @@ fun TaskStatusColumn(
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             items(tasks) { task ->
-                ProjectDetailsTaskCard(task = task)
+                Box(modifier = Modifier.clickable { onTaskItemClicked(task) }) {
+                    ProjectDetailsTaskCard(task = task)
+                }
             }
         }
     }

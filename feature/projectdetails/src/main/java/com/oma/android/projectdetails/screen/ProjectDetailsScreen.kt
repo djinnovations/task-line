@@ -20,6 +20,7 @@ import com.oma.android.composeui.backarrow.CircularBackButton
 import com.oma.android.composeui.gradient.RandomGradientBox
 import com.oma.android.domainmodel.Status
 import com.oma.android.domainmodel.projectdetails.ProjectItem
+import com.oma.android.domainmodel.projectdetails.TaskItem
 import com.oma.android.projectdetails.component.ProjectDetailsTopSection
 import com.oma.android.projectdetails.component.TaskCategoryLazyRow
 
@@ -27,6 +28,7 @@ import com.oma.android.projectdetails.component.TaskCategoryLazyRow
 fun ProjectDetailsScreen(
     scaffoldPadding: PaddingValues,
     projectItem: ProjectItem,
+    onTaskItemClicked: (TaskItem) -> Unit,
     onBack: () -> Unit = {},
 ) {
     // Group tasks by their status for efficient filtering
@@ -57,6 +59,6 @@ fun ProjectDetailsScreen(
         Spacer(modifier = Modifier.height(8.dp))
 
         // Task Columns Row
-        TaskCategoryLazyRow(scaffoldPadding, tasksByStatus)
+        TaskCategoryLazyRow(scaffoldPadding, tasksByStatus, onTaskItemClicked = onTaskItemClicked)
     }
 }
