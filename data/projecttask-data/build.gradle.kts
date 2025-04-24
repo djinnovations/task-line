@@ -7,9 +7,10 @@ apply {
 }
 
 android {
-    namespace = "com.oma.android.domainmodel"
+    namespace = "com.oma.android.projecttask.data"
 }
 
 dependencies {
-    "implementation"(project(Modules.projectTaskTimesheetData))
+    "implementation"(project(Modules.roomDb))
+    "implementation"(project(Modules.base))
 }

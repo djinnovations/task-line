@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import com.oma.android.composeui.gradient.RandomGradientBox
 
 @Composable
-fun ProjectCard(title: String) {
+fun ProjectCard(title: String, description: String) {
     Card(
         modifier = Modifier
             .width(dimensionResource(com.intuit.sdp.R.dimen._200sdp))
@@ -35,7 +35,7 @@ fun ProjectCard(title: String) {
                     .align(Alignment.BottomStart)
             ) {
                 Text(text = title, style = MaterialTheme.typography.titleLarge)
-                Text(text = "UI Kit Design", style = MaterialTheme.typography.labelSmall)
+                Text(text = description, style = MaterialTheme.typography.labelSmall)
             }
         }
     }

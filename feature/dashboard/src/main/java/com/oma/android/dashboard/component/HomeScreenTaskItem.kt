@@ -22,10 +22,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.oma.android.composeui.chip.OutlinedChip
 import com.oma.android.composeui.theme.Themer
-import com.oma.android.domainmodel.Status
+import com.oma.android.domainmodel.projectdetails.TaskItem
 
 @Composable
-fun HomeScreenTaskItem(task: String) {
+fun HomeScreenTaskItem(task: TaskItem) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -40,7 +40,7 @@ fun HomeScreenTaskItem(task: String) {
                 .padding(12.dp)
         ) {
             Text(
-                text = task,
+                text = task.title,
                 style = MaterialTheme.typography.bodyMedium,
                 color = Themer.colors.TextAlternate
             )
@@ -51,11 +51,11 @@ fun HomeScreenTaskItem(task: String) {
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
-                    text = "Due Date: 30/04/2025",
+                    text = "Due Date: ${task.getFormattedDueDate()}",
                     style = MaterialTheme.typography.labelMedium, color = Themer.colors.Dugong
                 )
                 Spacer(Modifier.width(8.dp))
-                OutlinedChip(Status.Todo.text)
+                OutlinedChip(task.status.text)
             }
         }
     }

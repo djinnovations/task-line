@@ -9,33 +9,28 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.oma.android.composeui.header.PrimaryHeader
-import com.oma.android.dashboard.component.ProjectCard
+import com.oma.android.dashboard.HomeScreenData
 import com.oma.android.dashboard.component.HomeScreenTaskItem
+import com.oma.android.dashboard.component.ProjectCard
 import com.oma.android.domainmodel.projectdetails.ProjectItem
 import com.oma.android.domainmodel.projectdetails.TaskItem
+import kotlinx.coroutines.flow.StateFlow
 
 @Composable
 fun HomeScreen(
+    state: StateFlow<HomeScreenData>,
     seeAllProjects: () -> Unit = {},
     seeAllTask: () -> Unit = {},
     onTaskClicked: (TaskItem?) -> Unit = {},
-    onProjectClicked: (ProjectItem?) -> Unit,
+    onProjectClicked: (ProjectItem) -> Unit,
 ) {
-    val recentProjects = remember { listOf("Tiki Mobile App", "Banking App", "Ecom UI Kit") }
-    val recentTasks = remember {
-        listOf(
-            "Kickoff Meeting",
-            "Wireframe Review",
-            "Client Feedback",
-            "Fix Login Bug",
-            "Design Polish"
-        )
-    }
+    val homeScreenData = state.collectAsState().value
+    if (homeScreenData.projectList.isEmpty()) return
 
     LazyColumn(
         modifier = Modifier
@@ -52,12 +47,12 @@ fun HomeScreen(
         item {
             // Recent Projects LazyRow
             LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                items(recentProjects.take(3)) { project ->
+                items(homeScreenData.projectList) { project ->
                     Box(
-                        modifier = Modifier.clickable { onProjectClicked.invoke(null) },
+                        modifier = Modifier.clickable { onProjectClicked.invoke(project) },
                         contentAlignment = Alignment.Center
                     ) {
-                        ProjectCard(title = project)
+                        ProjectCard(title = project.title, project.description)
                     }
                 }
             }
@@ -70,7 +65,7 @@ fun HomeScreen(
         }
 
         // Tasks or Features
-        items(recentTasks.take(5)) { task ->
+        items(homeScreenData.projectList[0].taskItems.toList()) { task ->
             HomeScreenTaskItem(task)
         }
     }

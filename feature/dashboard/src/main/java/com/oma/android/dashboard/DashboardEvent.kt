@@ -1,7 +1,10 @@
 package com.oma.android.dashboard
 
-internal sealed class DashboardEvent {
+import com.oma.android.domainmodel.projectdetails.ProjectItem
+import com.oma.android.domainmodel.projectdetails.TaskItem
 
-    data object ProjectItemClick: DashboardEvent()
-    data object TaskItemClick: DashboardEvent()
+internal sealed class DashboardEvent {
+    data object FetchProjects : DashboardEvent()
+    data class ProjectItemClick(val project: ProjectItem): DashboardEvent()
+    data class TaskItemClick(val task: TaskItem): DashboardEvent()
 }

@@ -11,4 +11,6 @@ object Modules {
     const val roomDb = ":data:roomdb"
     const val dataUtils = ":data:utils"
     const val loginData = ":data:login-data"
+    const val projectTaskTimesheetData = ":data:projecttask-data"
+
 }

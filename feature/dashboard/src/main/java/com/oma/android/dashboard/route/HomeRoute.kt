@@ -1,6 +1,7 @@
 package com.oma.android.dashboard.route
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.NavController
 import com.oma.android.dashboard.DashboardEvent
 import com.oma.android.dashboard.DashboardSharedViewModel
@@ -11,7 +12,12 @@ internal fun HomeRoute(
     navController: NavController,
     viewModel: DashboardSharedViewModel
 ) {
-    HomeScreen () { _ ->
-        viewModel.onEvent(DashboardEvent.ProjectItemClick)
+    // Perform onCreate init
+    LaunchedEffect(Unit) {
+        viewModel.onEvent(DashboardEvent.FetchProjects)
+    }
+
+    HomeScreen(viewModel.homeScreenStateFlow) { project ->
+        viewModel.onEvent(DashboardEvent.ProjectItemClick(project))
     }
 }

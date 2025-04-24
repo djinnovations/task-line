@@ -23,13 +23,13 @@ rootProject.name = "Task Line"
 include(":base")
 include(":app")
 include(":composeui")
+include(":domainmodel")
 
 include(":feature:login")
+include(":feature:dashboard")
+include(":feature:projectdetails")
 
 include(":data:utils")
 include(":data:login-data")
-
 include(":data:roomdb")
-include(":feature:dashboard")
-include(":domainmodel")
-include(":feature:projectdetails")
+include(":data:projecttask-data")
