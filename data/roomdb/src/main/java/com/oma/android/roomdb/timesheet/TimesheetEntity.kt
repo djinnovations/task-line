@@ -11,5 +11,6 @@ data class TimesheetEntity(
     val date: String,
     val startTime: String,
     val endTime: String,
+    val duration: String,
     val comment: String
 )

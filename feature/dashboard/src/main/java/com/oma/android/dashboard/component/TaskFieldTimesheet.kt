@@ -6,11 +6,12 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowRight
-import androidx.compose.material.icons.filled.Architecture
+import androidx.compose.material.icons.filled.Task
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -23,50 +24,53 @@ import com.oma.android.composeui.theme.Themer
 import kotlinx.collections.immutable.ImmutableList
 
 @Composable
-fun ProjectFieldTimesheet(modifier: Modifier, optionList: ImmutableList<String>, onProjectChanged: (String) -> Unit) {
+fun TaskFieldTimesheet(modifier: Modifier, optionList: ImmutableList<String>, onTaskChanged: (String) -> Unit) {
 
-    var projectSelected by remember { mutableStateOf(optionList[0]) }
-    var projectSelectionRequest by remember { mutableStateOf(false) }
-    // Choose Project Field (opens modal)
+    var taskSelected by remember { mutableStateOf(optionList[0]) }
+    LaunchedEffect(optionList) {
+        taskSelected = optionList[0]
+        onTaskChanged(taskSelected)
+    }
+    var taskSelectionRequest by remember { mutableStateOf(false) }
     Row(
         modifier = modifier
             .clickable {
-                projectSelectionRequest = !projectSelectionRequest
+                taskSelectionRequest = !taskSelectionRequest
             },
         horizontalArrangement = Arrangement.spacedBy(12.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Icon(
-            Icons.Default.Architecture, contentDescription = "Project",
+            Icons.Filled.Task, contentDescription = "Task",
             tint = Themer.colors.Black100
         )
         Text(
-            "Project: ",
+            "Task: ",
             style = MaterialTheme.typography.labelMedium,
             color = Themer.colors.TextAlternate
         )
         Text(
-            text = projectSelected,
+            text = taskSelected,
             style = MaterialTheme.typography.labelMedium,
             color = Themer.colors.TextAlternate
         )
         Spacer(Modifier.weight(1f, true))
         Icon(
-            Icons.AutoMirrored.Default.ArrowRight, contentDescription = "Project",
+            Icons.AutoMirrored.Default.ArrowRight, contentDescription = "Task",
             tint = Themer.colors.Black100
         )
     }
 
-    if (projectSelectionRequest) {
+    if (taskSelectionRequest) {
         RadioGroupBottomSheet(
-            title = "Select Project",
+            title = "Select Task",
             presetStatus = optionList[0],
             options = optionList,
-            onDismissRequest = { projectSelectionRequest = false }
+            onDismissRequest = { taskSelectionRequest = false }
         ) {
-            projectSelectionRequest = false
-            projectSelected = it
-            onProjectChanged.invoke(it)
+            taskSelectionRequest = false
+            taskSelected = it
+            onTaskChanged.invoke(it)
         }
     }
 }

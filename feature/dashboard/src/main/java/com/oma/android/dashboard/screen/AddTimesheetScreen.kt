@@ -1,27 +1,21 @@
 package com.oma.android.dashboard.screen
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowRight
-import androidx.compose.material.icons.filled.Task
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -32,17 +26,30 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.oma.android.composeui.button.ButtonPrimary
+import com.oma.android.composeui.text.CenteredTextWithLines
 import com.oma.android.composeui.theme.Secondary
 import com.oma.android.composeui.theme.Themer
 import com.oma.android.dashboard.component.CommentFieldTimesheet
 import com.oma.android.dashboard.component.DateSelector
 import com.oma.android.dashboard.component.ProjectFieldTimesheet
+import com.oma.android.dashboard.component.TaskFieldTimesheet
 import com.oma.android.dashboard.component.TimeSelector
+import com.oma.android.dashboard.screen.uistatemodel.TimesheetUiState
+import com.oma.android.domainmodel.timesheet.TimesheetData
+import kotlinx.collections.immutable.toPersistentList
+import kotlinx.coroutines.flow.StateFlow
 import java.util.Calendar
+import java.util.Locale
+import java.util.concurrent.TimeUnit
 
 @Composable
-fun AddTimesheetScreen(onSubmit: () -> Unit = {}) {
-    val taskSelected by remember { mutableStateOf("") }
+fun AddTimesheetScreen(
+    timesheetUiState: StateFlow<TimesheetUiState>,
+    notifyMessage: (String) -> Unit,
+    onSubmit: (TimesheetData) -> Unit = {}
+) {
+    val projectTitleMap = timesheetUiState.collectAsState().value.projectTitleMap
+    if (projectTitleMap.isEmpty()) return
     var (startHour, startMin) = remember {
         Calendar.getInstance().get(Calendar.HOUR_OF_DAY) to
                 Calendar.getInstance().get(Calendar.MINUTE)
@@ -51,10 +58,6 @@ fun AddTimesheetScreen(onSubmit: () -> Unit = {}) {
         Calendar.getInstance().get(Calendar.HOUR_OF_DAY) to
                 Calendar.getInstance().get(Calendar.MINUTE)
     }
-    var selectedDate = remember { "" }
-    var selectedProject = remember { "" }
-    val comments = remember { StringBuilder("") }
-
     Card(
         modifier = Modifier
             .padding(16.dp)
@@ -68,7 +71,27 @@ fun AddTimesheetScreen(onSubmit: () -> Unit = {}) {
                 .background(Color.White),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            var taskSelectionRequest by remember { mutableStateOf(false) }
+            val projectTitles = remember { projectTitleMap.keys }
+            var selectedProject by remember { mutableStateOf(projectTitles.first()) }
+            var selectedTask by remember {
+                mutableStateOf(
+                    projectTitleMap[selectedProject]?.toPersistentList()?.get(0)
+                )
+            }
+            var duration by remember { mutableStateOf("0:0") }
+            var selectedDate by remember { mutableStateOf("") }
+            var comments by remember { mutableStateOf("") }
+
+            // Derived state that only changes when validation result changes
+            val isFormValid by remember {
+                derivedStateOf {
+                    selectedProject.isNotBlank() &&
+                            selectedTask!!.isNotBlank() &&
+                            duration.isNotBlank() &&
+                            selectedDate.isNotBlank() &&
+                            comments.isNotBlank()
+                }
+            }
 
             // Solid strip on top
             Box(
@@ -79,46 +102,26 @@ fun AddTimesheetScreen(onSubmit: () -> Unit = {}) {
                     .clip(RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp))
             )
 
+            // Choose Project Field
             ProjectFieldTimesheet(
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(color = Themer.colors.FillSecondary)
-                    .padding(horizontal = 10.dp, vertical = 10.dp)
+                    .padding(horizontal = 10.dp, vertical = 10.dp),
+                optionList = projectTitles.toPersistentList(),
             ) {
                 selectedProject = it
             }
 
             // Choose Task Field (opens modal)
-            Row(
+            TaskFieldTimesheet(
                 modifier = Modifier
-                    .clickable {
-                        taskSelectionRequest = !taskSelectionRequest
-                    }
                     .fillMaxWidth()
                     .background(color = Themer.colors.FillSecondary)
                     .padding(horizontal = 10.dp, vertical = 10.dp),
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
-                verticalAlignment = Alignment.CenterVertically,
+                optionList = projectTitleMap[selectedProject]?.toPersistentList()!!
             ) {
-                Icon(
-                    Icons.Filled.Task, contentDescription = "Task",
-                    tint = Themer.colors.Black100
-                )
-                Text(
-                    "Task: ",
-                    style = MaterialTheme.typography.labelMedium,
-                    color = Themer.colors.TextAlternate
-                )
-                Text(
-                    text = taskSelected,
-                    style = MaterialTheme.typography.labelMedium,
-                    color = Themer.colors.TextAlternate
-                )
-                Spacer(Modifier.weight(1f, true))
-                Icon(
-                    Icons.AutoMirrored.Default.ArrowRight, contentDescription = "Project",
-                    tint = Themer.colors.Black100
-                )
+                selectedTask = it
             }
 
             // Date Field (opens modal)
@@ -143,24 +146,29 @@ fun AddTimesheetScreen(onSubmit: () -> Unit = {}) {
                 TimeSelector(Modifier, label = "Start Time", initialTime = startHour to startMin) {
                     startHour = it.first
                     startMin = it.second
+
+                    duration = getTimeDifference(startHour, startMin, endHour, endMin)
                 }
+
+                CenteredTextWithLines(modifier = Modifier.fillMaxWidth(0.4f), duration)
 
                 // End Time
                 TimeSelector(Modifier, label = "End Time", initialTime = endHour to endMin) {
                     endHour = it.first
                     endMin = it.second
+
+                    duration = getTimeDifference(startHour, startMin, endHour, endMin)
                 }
             }
 
             // Comments
-            CommentFieldTimesheet(modifier = Modifier
-                .padding(16.dp)
-                .fillMaxWidth()
-                .wrapContentHeight()) {
-                comments.apply {
-                    clear()
-                    append(it)
-                }
+            CommentFieldTimesheet(
+                modifier = Modifier
+                    .padding(16.dp)
+                    .fillMaxWidth()
+                    .wrapContentHeight()
+            ) {
+                comments = it
             }
 
             ButtonPrimary(
@@ -168,8 +176,58 @@ fun AddTimesheetScreen(onSubmit: () -> Unit = {}) {
                     .fillMaxWidth()
                     .padding(horizontal = 8.dp), text = "Submit"
             ) {
-                onSubmit()
+                if (isFormValid) {
+                    onSubmit(
+                        TimesheetData(
+                            projectName = selectedProject,
+                            taskName = selectedTask ?: "",
+                            date = selectedDate,
+                            startTime = String.format(
+                                Locale.getDefault(),
+                                "%02d:%02d",
+                                startHour,
+                                startMin
+                            ),
+                            endTime = String.format(
+                                Locale.getDefault(),
+                                "%02d:%02d",
+                                endHour,
+                                endMin
+                            ),
+                            duration = duration,
+                            comment = comments
+                        )
+                    )
+                } else {
+                    notifyMessage("Fill all fields")
+                }
             }
         }
     }
+}
+
+private fun getTimeDifference(startHour: Int, startMin: Int, endHour: Int, endMin: Int): String {
+    val start = Calendar.getInstance().apply {
+        set(Calendar.HOUR_OF_DAY, startHour)
+        set(Calendar.MINUTE, startMin)
+    }
+    val end = Calendar.getInstance().apply {
+        set(Calendar.HOUR_OF_DAY, endHour)
+        set(Calendar.MINUTE, endMin)
+    }
+
+    // Get the time in milliseconds for both calendars
+    val startMillis = start.timeInMillis
+    val endMillis = end.timeInMillis
+
+    // Calculate the difference in milliseconds
+    val diffMillis = endMillis - startMillis
+
+    // Convert to hours and minutes
+    val hours = TimeUnit.MILLISECONDS.toHours(diffMillis)
+    val minutes = TimeUnit.MILLISECONDS.toMinutes(diffMillis) -
+            TimeUnit.HOURS.toMinutes(hours)
+
+    // Format as HH:MM
+    return "%02d:%02d".format(hours, minutes)
 }

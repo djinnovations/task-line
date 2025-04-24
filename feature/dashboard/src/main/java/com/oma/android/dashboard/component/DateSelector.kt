@@ -83,4 +83,6 @@ fun DateSelector(
             tint = Themer.colors.Black100
         )
     }
+    // Set date on first run
+    onDateSelected(formattedDate)
 }

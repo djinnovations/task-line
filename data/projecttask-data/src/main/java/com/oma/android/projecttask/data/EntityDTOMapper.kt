@@ -3,6 +3,7 @@ package com.oma.android.projecttask.data
 import com.oma.android.roomdb.projectdetails.ProjectEntity
 import com.oma.android.roomdb.projectdetails.ProjectWithTasks
 import com.oma.android.roomdb.projectdetails.TaskEntity
+import com.oma.android.roomdb.timesheet.TimesheetEntity
 
 fun List<ProjectWithTasks>.toProjectWithTaskDto() = this.map {
     it.toProjectWithTaskDto()
@@ -56,3 +57,27 @@ fun TaskDTO.toTaskEntity() = TaskEntity(
     assignedTo = assignedTo,
     status = status
 )
+
+fun TimesheetEntity.toTimeSheetDto() = TimesheetDTO(
+    projectName = projectName,
+    taskName = taskName,
+    date = date,
+    startTime = startTime,
+    endTime = endTime,
+    duration = duration,
+    comment = comment
+)
+
+fun TimesheetDTO.toTimesheetEntity() = TimesheetEntity(
+    projectName = projectName,
+    taskName = taskName,
+    date = date,
+    startTime = startTime,
+    endTime = endTime,
+    duration = duration,
+    comment = comment
+)
+
+fun List<TimesheetEntity>.toTimesheetDtoList() = this.map {
+    it.toTimeSheetDto()
+}

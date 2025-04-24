@@ -25,3 +25,13 @@ data class TaskDTO(
     val assignedTo: String,
     val status: String
 )
+
+data class TimesheetDTO(
+    val projectName: String,
+    val taskName: String,
+    val date: String,
+    val startTime: String,
+    val endTime: String,
+    val duration: String,
+    val comment: String
+)

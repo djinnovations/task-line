@@ -5,19 +5,22 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.NavController
 import com.oma.android.dashboard.DashboardEvent
 import com.oma.android.dashboard.DashboardSharedViewModel
-import com.oma.android.dashboard.screen.HomeScreen
+import com.oma.android.dashboard.screen.AddTimesheetScreen
 
 @Composable
-internal fun HomeRoute(
+internal fun AddTimesheetRoute(
     navController: NavController,
     viewModel: DashboardSharedViewModel
 ) {
     // Perform onCreate task
     LaunchedEffect(Unit) {
-        viewModel.onEvent(DashboardEvent.FetchProjects)
+        viewModel.onEvent(DashboardEvent.FetchTimesheetOptions)
     }
 
-    HomeScreen(viewModel.homeScreenStateFlow) { project ->
-        viewModel.onEvent(DashboardEvent.ProjectItemClick(project))
+    AddTimesheetScreen(
+        viewModel.timesheetScreenStateFlow,
+        notifyMessage = { viewModel.onEvent(DashboardEvent.NotifyMessage(it)) }
+    ) {
+        viewModel.onEvent(DashboardEvent.SubmitTimesheet(it))
     }
 }

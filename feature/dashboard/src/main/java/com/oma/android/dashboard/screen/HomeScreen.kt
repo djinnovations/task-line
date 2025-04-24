@@ -14,7 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.oma.android.composeui.header.PrimaryHeader
-import com.oma.android.dashboard.HomeScreenData
+import com.oma.android.dashboard.screen.uistatemodel.HomeScreenUiState
 import com.oma.android.dashboard.component.HomeScreenTaskItem
 import com.oma.android.dashboard.component.ProjectCard
 import com.oma.android.domainmodel.projectdetails.ProjectItem
@@ -23,7 +23,7 @@ import kotlinx.coroutines.flow.StateFlow
 
 @Composable
 fun HomeScreen(
-    state: StateFlow<HomeScreenData>,
+    state: StateFlow<HomeScreenUiState>,
     seeAllProjects: () -> Unit = {},
     seeAllTask: () -> Unit = {},
     onTaskClicked: (TaskItem?) -> Unit = {},

@@ -3,6 +3,7 @@ package com.oma.android.taskline
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -36,6 +37,9 @@ class DashboardActivity : ComponentActivity() {
     private fun collectEvents() {
         dashboardSharedViewModel.uiEvent.asLiveData().observe(this@DashboardActivity) { event ->
             when (event) {
+                is UiEvent.NotifyMessage -> {
+                    Toast.makeText(this@DashboardActivity, event.message, Toast.LENGTH_SHORT).show()
+                }
                 is UiEvent.NavigateToActivity -> {
                     val destination = when (event.destination) {
                         Destination.ProjectDetails -> ProjectDetailsActivity::class.java

@@ -9,9 +9,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.oma.android.composeui.theme.Themer
 import com.oma.android.dashboard.DashboardSharedViewModel
+import com.oma.android.dashboard.route.AddTimesheetRoute
 import com.oma.android.dashboard.route.HomeRoute
 import com.oma.android.dashboard.route.ScreenRoutes
-import com.oma.android.dashboard.screen.AddTimesheetScreen
 
 @Composable
 internal fun DashboardNavHost(
@@ -35,7 +35,7 @@ internal fun DashboardNavHost(
             )
         }
         composable(ScreenRoutes.Profile.route) {
-            AddTimesheetScreen()
+            AddTimesheetRoute(navController, viewModel)
         }
     }
 }
