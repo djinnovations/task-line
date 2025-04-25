@@ -26,14 +26,14 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.oma.android.composeui.button.ButtonPrimary
+import com.oma.android.composeui.datetimepicker.DateSelector
+import com.oma.android.composeui.datetimepicker.TimeSelector
 import com.oma.android.composeui.text.CenteredTextWithLines
 import com.oma.android.composeui.theme.Secondary
 import com.oma.android.composeui.theme.Themer
 import com.oma.android.dashboard.component.CommentFieldTimesheet
-import com.oma.android.dashboard.component.DateSelector
 import com.oma.android.dashboard.component.ProjectFieldTimesheet
 import com.oma.android.dashboard.component.TaskFieldTimesheet
-import com.oma.android.dashboard.component.TimeSelector
 import com.oma.android.dashboard.screen.uistatemodel.TimesheetUiState
 import com.oma.android.domainmodel.timesheet.TimesheetData
 import kotlinx.collections.immutable.toPersistentList
@@ -130,8 +130,8 @@ fun AddTimesheetScreen(
                     .fillMaxWidth()
                     .background(color = Themer.colors.FillSecondary)
                     .padding(horizontal = 10.dp, vertical = 10.dp),
-            ) {
-                selectedDate = it
+            ) { formattedDate, _ ->
+                selectedDate = formattedDate
             }
 
             // Time Selector

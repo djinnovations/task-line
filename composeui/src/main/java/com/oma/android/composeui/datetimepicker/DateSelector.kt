@@ -1,4 +1,4 @@
-package com.oma.android.dashboard.component
+package com.oma.android.composeui.datetimepicker
 
 import android.app.DatePickerDialog
 import androidx.compose.foundation.clickable
@@ -12,6 +12,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -30,12 +31,12 @@ import java.util.Locale
 fun DateSelector(
     modifier: Modifier,
     initialDate: Calendar = Calendar.getInstance(),
-    onDateSelected: (formattedDate: String) -> Unit
+    onDateSelected: (formattedDate: String, epochMillis: Long) -> Unit
 ) {
     val dateFormat = remember { SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()) }
     // Date Field (opens modal)
     var formattedDate by remember {
-        mutableStateOf(dateFormat.format(Date()))
+        mutableStateOf(dateFormat.format(initialDate.time))
     }
     val context = LocalContext.current
     val datePickerDialog = remember {
@@ -48,7 +49,7 @@ fun DateSelector(
                     set(Calendar.DAY_OF_MONTH, dayOfMonth)
                 }
                 formattedDate = dateFormat.format(cal.time)
-                onDateSelected(formattedDate)
+                onDateSelected(formattedDate, cal.timeInMillis)
             },
             initialDate.get(Calendar.YEAR),
             initialDate.get(Calendar.MONTH),
@@ -84,5 +85,7 @@ fun DateSelector(
         )
     }
     // Set date on first run
-    onDateSelected(formattedDate)
+    LaunchedEffect(Unit) {
+        onDateSelected(formattedDate, initialDate.timeInMillis)
+    }
 }

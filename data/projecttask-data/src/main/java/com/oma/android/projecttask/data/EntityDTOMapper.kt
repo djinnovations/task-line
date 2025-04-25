@@ -5,7 +5,7 @@ import com.oma.android.roomdb.projectdetails.ProjectWithTasks
 import com.oma.android.roomdb.projectdetails.TaskEntity
 import com.oma.android.roomdb.timesheet.TimesheetEntity
 
-fun List<ProjectWithTasks>.toProjectWithTaskDto() = this.map {
+fun List<ProjectWithTasks>.toProjectWithTaskListDto() = this.map {
     it.toProjectWithTaskDto()
 }
 

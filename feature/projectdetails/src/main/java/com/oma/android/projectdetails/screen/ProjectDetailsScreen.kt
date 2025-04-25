@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -19,18 +20,20 @@ import androidx.compose.ui.unit.dp
 import com.oma.android.composeui.backarrow.CircularBackButton
 import com.oma.android.composeui.gradient.RandomGradientBox
 import com.oma.android.domainmodel.Status
-import com.oma.android.domainmodel.projectdetails.ProjectItem
 import com.oma.android.domainmodel.projectdetails.TaskItem
 import com.oma.android.projectdetails.component.ProjectDetailsTopSection
 import com.oma.android.projectdetails.component.TaskCategoryLazyRow
+import com.oma.android.projectdetails.screen.uistatemodel.ProjectDetailsUiState
+import kotlinx.coroutines.flow.StateFlow
 
 @Composable
 fun ProjectDetailsScreen(
     scaffoldPadding: PaddingValues,
-    projectItem: ProjectItem,
+    projectItemFlow: StateFlow<ProjectDetailsUiState?>,
     onTaskItemClicked: (TaskItem) -> Unit,
     onBack: () -> Unit = {},
 ) {
+    val projectItem = projectItemFlow.collectAsState().value?.projectItem ?: return
     // Group tasks by their status for efficient filtering
     val tasksByStatus = remember { projectItem.taskItems.groupBy { it.status } }
     val completedTask = remember { tasksByStatus[Status.Done]?.size ?: 0 }

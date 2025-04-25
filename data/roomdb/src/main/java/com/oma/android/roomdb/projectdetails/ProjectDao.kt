@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ProjectDao {
@@ -17,4 +18,9 @@ interface ProjectDao {
     @Transaction
     @Query("SELECT * FROM projects")
     suspend fun getProjectsWithTasks(): List<ProjectWithTasks>
+
+    @Transaction
+    @Query("SELECT * FROM projects WHERE id = :projectId")
+    fun getProjectWithTasksFlow(projectId: Long): Flow<ProjectWithTasks>
+
 }

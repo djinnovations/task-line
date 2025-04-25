@@ -15,7 +15,7 @@ internal fun ProjectDetailsRoute(
 ) {
     ProjectDetailsScreen(
         scaffoldPadding,
-        viewModel.getProjectData()!!,
+        viewModel.projectWithTasksFlow,
         onTaskItemClicked = {
             viewModel.setTaskItem(it)
             navController.navigate(ScreenRoutes.TaskDetails.route)

@@ -36,10 +36,10 @@ class DashboardActivity : ComponentActivity() {
     }
 
     private fun collectEvents() {
-        dashboardSharedViewModel.uiEvent.asLiveData().observe(this@DashboardActivity) { event ->
+        dashboardSharedViewModel.uiEvent.asLiveData().observe(this) { event ->
             when (event) {
                 is UiEvent.NotifyMessage -> {
-                    Toast.makeText(this@DashboardActivity, event.message, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, event.message, Toast.LENGTH_SHORT).show()
                 }
                 is UiEvent.NavigateToActivity -> {
                     val destination = when (event.destination) {

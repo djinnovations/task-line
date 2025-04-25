@@ -37,3 +37,14 @@ fun TaskDTO.toTask() = TaskItem(
     assignedTo,
     status = Status.valueOf(status)
 )
+
+fun TaskItem.toTaskDto(projectId: Long) = TaskDTO(
+    id,
+    projectId,
+    title,
+    description,
+    dueDate,
+    storyPoints,
+    assignedTo,
+    status.name
+)

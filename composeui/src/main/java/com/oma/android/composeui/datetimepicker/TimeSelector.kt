@@ -1,4 +1,4 @@
-package com.oma.android.dashboard.component
+package com.oma.android.composeui.datetimepicker
 
 import android.app.TimePickerDialog
 import androidx.compose.foundation.background

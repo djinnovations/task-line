@@ -3,6 +3,7 @@ package com.oma.android.projectdetails.route
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
+import com.oma.android.projectdetails.ProjectDetailsEvent
 import com.oma.android.projectdetails.ProjectDetailsSharedViewModel
 import com.oma.android.projectdetails.screen.TaskDetailsScreen
 
@@ -15,6 +16,7 @@ internal fun TaskDetailsRoute(
     TaskDetailsScreen(
         scaffoldPadding,
         viewModel.getTaskItem()!!,
+        onUpdateTask = { viewModel.onEvent(ProjectDetailsEvent.UpdateTaskItem(it)) }
     ) {
         navController.popBackStack()
     }

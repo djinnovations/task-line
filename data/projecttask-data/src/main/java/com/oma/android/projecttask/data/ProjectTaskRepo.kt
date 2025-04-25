@@ -3,6 +3,7 @@ package com.oma.android.projecttask.data
 import com.oma.android.roomdb.projectdetails.ProjectDao
 import com.oma.android.roomdb.projectdetails.TaskDao
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -17,7 +18,7 @@ class ProjectTaskRepo @Inject constructor(
     }
 
     suspend fun getAllProjectsWithTask() = withContext(Dispatchers.IO) {
-        projectDao.getProjectsWithTasks().toProjectWithTaskDto()
+        projectDao.getProjectsWithTasks().toProjectWithTaskListDto()
     }
 
     suspend fun getTaskByProjectId(projectId: Long) = withContext(Dispatchers.IO) {
@@ -26,5 +27,11 @@ class ProjectTaskRepo @Inject constructor(
 
     suspend fun updateTask(taskDTO: TaskDTO) = withContext(Dispatchers.IO) {
         taskDao.updateTask(taskDTO.toTaskEntity())
+    }
+
+    suspend fun getProjectWithTaskFlow(projectId: Long) = withContext(Dispatchers.IO) {
+        projectDao.getProjectWithTasksFlow(projectId).map {
+            it.toProjectWithTaskDto()
+        }
     }
 }
