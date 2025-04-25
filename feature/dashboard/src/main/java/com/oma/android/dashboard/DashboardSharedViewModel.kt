@@ -58,6 +58,12 @@ class DashboardSharedViewModel @Inject internal constructor(
                     _uiEvent.emit(UiEvent.NotifyMessage(event.message))
                 }
             }
+
+            DashboardEvent.ViewTimeSheetClick -> {
+                viewModelScope.launch {
+                    _uiEvent.emit(UiEvent.NavigateToActivity(Destination.ViewTimesheet))
+                }
+            }
         }
     }
 

@@ -15,5 +15,6 @@ android {
 dependencies {
     implementation(AndroidX.roomRuntime)
     implementation(AndroidX.roomKtx)
+    implementation(AndroidX.roomPaging)
     ksp(AndroidX.roomCompiler)
 }

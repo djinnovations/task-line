@@ -1,4 +1,4 @@
-package com.oma.android.projectdetails
+package com.oma.android.viewtimesheet
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -10,13 +10,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import com.oma.android.composeui.theme.TaskLineTheme
-import com.oma.android.projectdetails.navhost.ProjectDetailsNavHost
+import com.oma.android.viewtimesheet.components.ViewTimesheetScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ProjectDetailsActivity : ComponentActivity() {
+class ViewTimesheetActivity : ComponentActivity() {
 
-    private val projectDetailsSharedViewModel: ProjectDetailsSharedViewModel by viewModels()
+    private val viewTimesheetViewModel: ViewTimesheetViewModel by viewModels()
 
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,10 +26,12 @@ class ProjectDetailsActivity : ComponentActivity() {
         setContent {
             TaskLineTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { padding ->
-                    ProjectDetailsNavHost(
+                    ViewTimesheetScreen(
                         padding,
-                        projectDetailsSharedViewModel
-                    )
+                        viewTimesheetViewModel
+                    ) {
+                        finish()
+                    }
                 }
             }
         }

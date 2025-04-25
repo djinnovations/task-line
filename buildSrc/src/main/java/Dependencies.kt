@@ -19,9 +19,11 @@ object AndroidX {
     const val navigationRuntime = "androidx.navigation:navigation-runtime-ktx:$navigationVersion"
     const val preferencesKtx = "androidx.preference:preference-ktx:1.2.1"
     const val recyclerView = "androidx.recyclerview:recyclerview:1.3.2"
-    const val roomRuntime = "androidx.room:room-runtime:2.6.1"
-    const val roomKtx = "androidx.room:room-ktx:2.6.1"
-    const val roomCompiler = "androidx.room:room-compiler:2.6.1"
+    const val roomVersion = "2.6.1"
+    const val roomRuntime = "androidx.room:room-runtime:$roomVersion"
+    const val roomKtx = "androidx.room:room-ktx:$roomVersion"
+    const val roomCompiler = "androidx.room:room-compiler:$roomVersion"
+    const val roomPaging = "androidx.room:room-paging:$roomVersion"
     const val workRuntime = "androidx.work:work-runtime-ktx:2.9.0"
 
     // Splash Screen (https://developer.android.com/develop/ui/views/launch/splash-screen)
@@ -130,7 +132,7 @@ object Hilt {
 
 object Paging {
     const val paging_version = "3.3.0"
-    val paging = "androidx.paging:paging-runtime:$paging_version"
+    val pagingRuntime = "androidx.paging:paging-runtime:$paging_version"
     val pagingCommon = "androidx.paging:paging-common:$paging_version"
     val pagingCompose = "androidx.paging:paging-compose:$paging_version"
     val pagingComposeAndroid = "androidx.paging:paging-compose-android:$paging_version"

@@ -51,6 +51,7 @@ dependencies {
     "implementation"(project(Modules.base))
     "implementation"(project(Modules.dashboard))
     "implementation"(project(Modules.projectDetails))
+    "implementation"(project(Modules.viewTimesheet))
 
     // Test
     AndroidTest.dependencies.forEach { androidTestImplementation(it) }

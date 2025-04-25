@@ -28,6 +28,7 @@ include(":domainmodel")
 include(":feature:login")
 include(":feature:dashboard")
 include(":feature:projectdetails")
+include(":feature:viewtimesheet")
 
 include(":data:utils")
 include(":data:login-data")

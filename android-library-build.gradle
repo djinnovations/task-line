@@ -101,4 +101,8 @@ dependencies {
     implementation(Hilt.daggerHiltAndroid)
     implementation(Hilt.hiltWorker)
     ksp(Hilt.daggerHiltCompiler)
+
+    // Paging commons
+    implementation(Paging.pagingRuntime)
+    implementation(Paging.pagingCommon)
 }

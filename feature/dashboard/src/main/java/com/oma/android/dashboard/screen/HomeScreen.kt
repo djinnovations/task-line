@@ -4,6 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -13,6 +14,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.oma.android.composeui.button.ButtonPrimary
 import com.oma.android.composeui.header.PrimaryHeader
 import com.oma.android.dashboard.screen.uistatemodel.HomeScreenUiState
 import com.oma.android.dashboard.component.HomeScreenTaskItem
@@ -26,6 +28,7 @@ fun HomeScreen(
     state: StateFlow<HomeScreenUiState>,
     seeAllProjects: () -> Unit = {},
     seeAllTask: () -> Unit = {},
+    onViewTimesheet: () -> Unit,
     onTaskClicked: (TaskItem?) -> Unit = {},
     onProjectClicked: (ProjectItem) -> Unit,
 ) {
@@ -65,8 +68,18 @@ fun HomeScreen(
         }
 
         // Tasks or Features
-        items(homeScreenData.projectList[0].taskItems.toList()) { task ->
+        items(homeScreenData.projectList[0].taskItems.toList().take(5)) { task ->
             HomeScreenTaskItem(task)
+        }
+
+        item {
+            ButtonPrimary(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 8.dp), text = "View Timesheet"
+            ) {
+                onViewTimesheet()
+            }
         }
     }
 }

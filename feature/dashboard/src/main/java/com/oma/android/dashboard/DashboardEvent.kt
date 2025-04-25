@@ -11,4 +11,5 @@ internal sealed class DashboardEvent {
     data class TaskItemClick(val task: TaskItem): DashboardEvent()
     data class SubmitTimesheet(val timesheetData: TimesheetData) : DashboardEvent()
     data class NotifyMessage(val message: String): DashboardEvent()
+    data object ViewTimeSheetClick: DashboardEvent()
 }

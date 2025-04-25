@@ -46,6 +46,7 @@ dependencies {
     api(AndroidX.navigationFragmentKtx)
     api(AndroidX.lifecycleCompose)
     api(Kotlin.collectionImmutable)
+    api(Paging.pagingCompose)
     api(MiscSdks.intuitSdp)
     api(MiscSdks.intuitSsp)
 }

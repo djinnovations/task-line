@@ -15,6 +15,7 @@ import com.oma.android.composeui.theme.TaskLineTheme
 import com.oma.android.dashboard.DashboardSharedViewModel
 import com.oma.android.dashboard.screen.DashboardScreen
 import com.oma.android.projectdetails.ProjectDetailsActivity
+import com.oma.android.viewtimesheet.ViewTimesheetActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -43,6 +44,7 @@ class DashboardActivity : ComponentActivity() {
                 is UiEvent.NavigateToActivity -> {
                     val destination = when (event.destination) {
                         Destination.ProjectDetails -> ProjectDetailsActivity::class.java
+                        Destination.ViewTimesheet -> ViewTimesheetActivity::class.java
                         else -> {
                             null
                         }

@@ -1,5 +1,6 @@
 package com.oma.android.roomdb.timesheet
 
+import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -12,4 +13,7 @@ interface TimesheetDao {
 
     @Query("SELECT * FROM timesheets")
     suspend fun getAllTimesheets(): List<TimesheetEntity>
+
+    @Query("SELECT * FROM timesheets ORDER BY date DESC")
+    fun getPagedTimesheets(): PagingSource<Int, TimesheetEntity>
 }

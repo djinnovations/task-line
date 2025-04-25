@@ -17,7 +17,10 @@ internal fun HomeRoute(
         viewModel.onEvent(DashboardEvent.FetchProjects)
     }
 
-    HomeScreen(viewModel.homeScreenStateFlow) { project ->
+    HomeScreen(
+        viewModel.homeScreenStateFlow,
+        onViewTimesheet = { viewModel.onEvent(DashboardEvent.ViewTimeSheetClick) }
+    ) { project ->
         viewModel.onEvent(DashboardEvent.ProjectItemClick(project))
     }
 }

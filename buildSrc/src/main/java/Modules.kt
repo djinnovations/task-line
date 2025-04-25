@@ -7,6 +7,7 @@ object Modules {
     const val login = ":feature:login"
     const val dashboard = ":feature:dashboard"
     const val projectDetails = ":feature:projectdetails"
+    const val viewTimesheet = ":feature:viewtimesheet"
 
     const val roomDb = ":data:roomdb"
     const val dataUtils = ":data:utils"
