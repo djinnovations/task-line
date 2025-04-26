@@ -10,6 +10,7 @@ import com.oma.android.domainmodel.projectdetails.ProjectDataHolder
 import com.oma.android.domainmodel.projectdetails.toProjectList
 import com.oma.android.domainmodel.timesheet.TimesheetData
 import com.oma.android.domainmodel.timesheet.toTimesheetDto
+import com.oma.android.login.data.session.SessionManager
 import com.oma.android.projecttask.data.ProjectTaskRepo
 import com.oma.android.projecttask.data.TimesheetRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,6 +20,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -28,6 +30,7 @@ import javax.inject.Inject
 class DashboardSharedViewModel @Inject internal constructor(
     private val projectTaskRepo: ProjectTaskRepo,
     private val timesheetRepo: TimesheetRepo,
+    private val sessionManager: SessionManager,
     private val projectDataHolder: ProjectDataHolder
 ) : ViewModel() {
 
@@ -36,14 +39,16 @@ class DashboardSharedViewModel @Inject internal constructor(
 
     init {
         viewModelScope.launch {
-            projectTaskRepo
-                .getAllProjectsWithTask()
-                .map {
-                    val list = it.toProjectList().toPersistentList()
-                    projectDataHolder.setProjectList(list)
-                    HomeScreenUiState(it.toProjectList().toPersistentList())
-                }
-                .collect { _homeScreenStateFlow.value = it }
+            val projectFlow = projectTaskRepo.getAllProjectsWithTask()
+            val userInfoFlow = sessionManager.getSession()
+            combine(
+                projectFlow,
+                userInfoFlow,
+            ) { project, user ->
+                val list = project.toProjectList().toPersistentList()
+                projectDataHolder.setProjectList(list)
+                HomeScreenUiState(project.toProjectList().toPersistentList(), user?.name)
+            }.collect { _homeScreenStateFlow.value = it }
         }
     }
 

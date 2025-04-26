@@ -35,4 +35,6 @@ open class DesignSystemBaseColor(
     val Onahau: Color = Color(0xFFD0F7FF),
     val SilverChalice: Color = Color(0xFFB0B0B0),
     val ChateauGreen: Color = Color(0xFF3FA15D),
+    val CrismsonRed: Color = Color(0xFFE54624),
+    val Purple100: Color = Color(0xFF8254F3),
 )

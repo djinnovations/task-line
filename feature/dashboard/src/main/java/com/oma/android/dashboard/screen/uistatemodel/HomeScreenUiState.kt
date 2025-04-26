@@ -5,5 +5,6 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
 data class HomeScreenUiState(
-    val projectList: ImmutableList<ProjectItem> = persistentListOf()
+    val projectList: ImmutableList<ProjectItem> = persistentListOf(),
+    val userName: String? = null
 )

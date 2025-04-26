@@ -1,7 +1,6 @@
 package com.oma.android.login
 
 import android.content.Intent
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.oma.android.base.main.UiEvent
@@ -22,7 +21,6 @@ class AuthViewModel @Inject constructor(
 ) : ViewModel() {
 
     init {
-        Log.d("TAG", "init: VM")
         checkLogin()
     }
 
@@ -36,6 +34,7 @@ class AuthViewModel @Inject constructor(
                 viewModelScope.launch {
                     val result = repo.addUser(event.name, event.userName, event.password)
                     if (result.isSuccess) {
+                        _uiEvent.emit(UiEvent.NotifyMessage("Registration Success"))
                         _uiEvent.emit(UiEvent.Navigate(ScreenRoutes.Login.route))
                     } else {
                         _uiEvent.emit(UiEvent.NotifyMessage("Registration failed"))

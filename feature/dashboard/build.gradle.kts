@@ -21,4 +21,5 @@ dependencies {
     "implementation"(project(Modules.composeUi))
     "implementation"(project(Modules.domainModel))
     "implementation"(project(Modules.projectTaskTimesheetData))
+    "implementation"(project(Modules.loginData))
 }
