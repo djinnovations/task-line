@@ -1,10 +1,12 @@
-package com.oma.android.projecttask.data
+package com.oma.android.projecttask.data.repo
 
-import android.util.Log
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.map
+import com.oma.android.projecttask.data.TimesheetDTO
+import com.oma.android.projecttask.data.toTimeSheetDto
+import com.oma.android.projecttask.data.toTimesheetEntity
 import com.oma.android.roomdb.timesheet.TimesheetDao
 import com.oma.android.roomdb.timesheet.TimesheetEntity
 import kotlinx.coroutines.Dispatchers
@@ -15,18 +17,14 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class TimesheetRepo @Inject constructor(
+class TimesheetRepoImpl @Inject constructor(
     private val timesheetDao: TimesheetDao
-) {
-    suspend fun getAllRecords() = withContext(Dispatchers.IO) {
-        timesheetDao.getAllTimesheets().toTimesheetListDto()
-    }
-
-    suspend fun submitTimesheet(timesheetDTO: TimesheetDTO) = withContext(Dispatchers.IO) {
+) : TimesheetRepo {
+    override suspend fun submitTimesheet(timesheetDTO: TimesheetDTO) = withContext(Dispatchers.IO) {
         timesheetDao.insertTimesheet(timesheetDTO.toTimesheetEntity())
     }
 
-    fun getTimesheetsPaged(): Flow<PagingData<TimesheetDTO>> {
+    override fun getTimesheetsPaged(): Flow<PagingData<TimesheetDTO>> {
         return Pager(
             config = PagingConfig(
                 pageSize = 20,
@@ -34,13 +32,11 @@ class TimesheetRepo @Inject constructor(
             ),
             pagingSourceFactory = {
                 val result = timesheetDao.getPagedTimesheets()
-                Log.d("TAG", "getTimesheetsPaged: "+result.toString())
                 result
             }
         ).flow
             .map { pagingData: PagingData<TimesheetEntity> ->
                 pagingData.map { entity ->
-                    Log.d("TAG", "getTimesheetsPaged: "+entity.toString())
                     entity.toTimeSheetDto()
                 }
             }

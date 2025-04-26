@@ -11,8 +11,8 @@ import com.oma.android.domainmodel.projectdetails.toProjectList
 import com.oma.android.domainmodel.timesheet.TimesheetData
 import com.oma.android.domainmodel.timesheet.toTimesheetDto
 import com.oma.android.login.data.session.SessionManager
-import com.oma.android.projecttask.data.ProjectTaskRepo
-import com.oma.android.projecttask.data.TimesheetRepo
+import com.oma.android.projecttask.data.repo.ProjectTaskRepo
+import com.oma.android.projecttask.data.repo.TimesheetRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.Dispatchers
@@ -21,7 +21,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject

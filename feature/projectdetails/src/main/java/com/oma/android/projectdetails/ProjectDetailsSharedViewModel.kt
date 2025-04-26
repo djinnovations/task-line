@@ -8,7 +8,7 @@ import com.oma.android.domainmodel.projectdetails.TaskItem
 import com.oma.android.domainmodel.projectdetails.toProject
 import com.oma.android.domainmodel.projectdetails.toTaskDto
 import com.oma.android.projectdetails.screen.uistatemodel.ProjectDetailsUiState
-import com.oma.android.projecttask.data.ProjectTaskRepo
+import com.oma.android.projecttask.data.repo.ProjectTaskRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
