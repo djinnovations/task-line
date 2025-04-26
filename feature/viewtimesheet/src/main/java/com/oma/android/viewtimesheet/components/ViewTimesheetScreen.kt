@@ -39,7 +39,7 @@ internal fun ViewTimesheetScreen(
             .background(Color.White),
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
-        Spacer(Modifier.height(4.dp))
+        Spacer(Modifier.height(2.dp))
         PrimaryTopBar(
             modifier = Modifier
                 .fillMaxWidth()
@@ -48,6 +48,8 @@ internal fun ViewTimesheetScreen(
             titleColor = Themer.colors.TextAlternate,
             onBack = onBack
         )
+
+        Spacer(Modifier.height(4.dp))
 
         LazyColumn(
             modifier = Modifier

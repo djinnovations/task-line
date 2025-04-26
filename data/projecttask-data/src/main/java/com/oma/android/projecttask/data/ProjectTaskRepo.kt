@@ -18,7 +18,8 @@ class ProjectTaskRepo @Inject constructor(
     }
 
     suspend fun getAllProjectsWithTask() = withContext(Dispatchers.IO) {
-        projectDao.getProjectsWithTasks().toProjectWithTaskListDto()
+        projectDao.getProjectsWithTasksListFlow()
+            .map { it.toProjectWithTaskListDto() }
     }
 
     suspend fun getTaskByProjectId(projectId: Long) = withContext(Dispatchers.IO) {

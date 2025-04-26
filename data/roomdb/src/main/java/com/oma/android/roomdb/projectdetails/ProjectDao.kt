@@ -17,10 +17,9 @@ interface ProjectDao {
 
     @Transaction
     @Query("SELECT * FROM projects")
-    suspend fun getProjectsWithTasks(): List<ProjectWithTasks>
+    fun getProjectsWithTasksListFlow(): Flow<List<ProjectWithTasks>>
 
     @Transaction
     @Query("SELECT * FROM projects WHERE id = :projectId")
     fun getProjectWithTasksFlow(projectId: Long): Flow<ProjectWithTasks>
-
 }

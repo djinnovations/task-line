@@ -78,6 +78,6 @@ fun TimesheetDTO.toTimesheetEntity() = TimesheetEntity(
     comment = comment
 )
 
-fun List<TimesheetEntity>.toTimesheetDtoList() = this.map {
+fun List<TimesheetEntity>.toTimesheetListDto() = this.map {
     it.toTimeSheetDto()
 }

@@ -19,6 +19,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -33,6 +34,19 @@ class DashboardSharedViewModel @Inject internal constructor(
     private val _homeScreenStateFlow = MutableStateFlow(HomeScreenUiState())
     val homeScreenStateFlow = _homeScreenStateFlow.asStateFlow()
 
+    init {
+        viewModelScope.launch {
+            projectTaskRepo
+                .getAllProjectsWithTask()
+                .map {
+                    val list = it.toProjectList().toPersistentList()
+                    projectDataHolder.setProjectList(list)
+                    HomeScreenUiState(it.toProjectList().toPersistentList())
+                }
+                .collect { _homeScreenStateFlow.value = it }
+        }
+    }
+
     private val _timesheetScreenStateFlow = MutableStateFlow(TimesheetUiState())
     val timesheetScreenStateFlow = _timesheetScreenStateFlow.asStateFlow()
 
@@ -41,7 +55,6 @@ class DashboardSharedViewModel @Inject internal constructor(
 
     internal fun onEvent(event: DashboardEvent) {
         when (event) {
-            DashboardEvent.FetchProjects -> getProjectList()
             is DashboardEvent.ProjectItemClick -> {
                 viewModelScope.launch {
                     projectDataHolder.setCurrentProject(event.project)
@@ -63,16 +76,6 @@ class DashboardSharedViewModel @Inject internal constructor(
                 viewModelScope.launch {
                     _uiEvent.emit(UiEvent.NavigateToActivity(Destination.ViewTimesheet))
                 }
-            }
-        }
-    }
-
-    private fun getProjectList() {
-        viewModelScope.launch {
-            val projects = projectTaskRepo.getAllProjectsWithTask().toProjectList()
-            projectDataHolder.setProjectList(projects)
-            _homeScreenStateFlow.update {
-                it.copy(projectList = projects.toPersistentList())
             }
         }
     }

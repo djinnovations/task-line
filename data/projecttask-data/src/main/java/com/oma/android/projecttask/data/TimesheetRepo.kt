@@ -19,7 +19,7 @@ class TimesheetRepo @Inject constructor(
     private val timesheetDao: TimesheetDao
 ) {
     suspend fun getAllRecords() = withContext(Dispatchers.IO) {
-        timesheetDao.getAllTimesheets().toTimesheetDtoList()
+        timesheetDao.getAllTimesheets().toTimesheetListDto()
     }
 
     suspend fun submitTimesheet(timesheetDTO: TimesheetDTO) = withContext(Dispatchers.IO) {
