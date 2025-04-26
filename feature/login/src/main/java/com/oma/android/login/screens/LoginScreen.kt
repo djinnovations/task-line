@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
@@ -32,6 +33,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.oma.android.composeui.backarrow.CircularBackButton
 import com.oma.android.composeui.shape.CurvedBottomShape
@@ -104,6 +106,7 @@ fun LoginScreen(
                 onValueChange = { email.value = it },
                 placeholder = "user@mail.com",
                 icon = Icons.Default.Email,
+                keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Email)
             )
 
             Spacer(modifier = Modifier.height(dimensionResource(com.intuit.sdp.R.dimen._12sdp)))
@@ -124,7 +127,8 @@ fun LoginScreen(
                             contentDescription = "Toggle Password"
                         )
                     }
-                }
+                },
+                keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Password)
             )
 
             Spacer(modifier = Modifier.height(dimensionResource(com.intuit.sdp.R.dimen._24sdp)))

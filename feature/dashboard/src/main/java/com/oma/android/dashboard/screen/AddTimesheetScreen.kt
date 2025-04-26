@@ -146,6 +146,7 @@ fun AddTimesheetScreen(
                         .fillMaxWidth()
                         .background(color = Themer.colors.FillSecondary)
                         .padding(horizontal = 10.dp, vertical = 10.dp),
+                    hint = "What Date: "
                 ) { formattedDate, _ ->
                     selectedDate = formattedDate
                 }

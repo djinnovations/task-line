@@ -119,6 +119,7 @@ fun TaskDetailsScreen(
                 onValueChange = { assignedTo.value = it },
                 placeholder = "Assigned To",
                 icon = Icons.Filled.AssignmentInd,
+                keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Email)
             )
 
             // Status Field (opens modal)
@@ -139,6 +140,7 @@ fun TaskDetailsScreen(
                     .fillMaxWidth()
                     .background(color = Themer.colors.FillSecondary)
                     .padding(horizontal = 10.dp, vertical = 10.dp),
+                hint = "Due Date: ",
                 initialDate = Calendar.getInstance().apply { timeInMillis = taskItem.dueDate }
             ) { _, epochMillis ->
                 selectedDate = epochMillis

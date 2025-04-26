@@ -30,6 +30,7 @@ import java.util.Locale
 @Composable
 fun DateSelector(
     modifier: Modifier,
+    hint: String,
     initialDate: Calendar = Calendar.getInstance(),
     onDateSelected: (formattedDate: String, epochMillis: Long) -> Unit
 ) {
@@ -70,7 +71,7 @@ fun DateSelector(
             tint = Themer.colors.Black100
         )
         Text(
-            "What Date: ", style = MaterialTheme.typography.labelMedium,
+            hint, style = MaterialTheme.typography.labelMedium,
             color = Themer.colors.TextAlternate
         )
         Text(
@@ -80,7 +81,7 @@ fun DateSelector(
         )
         Spacer(Modifier.weight(1f, true))
         Icon(
-            Icons.AutoMirrored.Default.ArrowRight, contentDescription = "Project",
+            Icons.AutoMirrored.Default.ArrowRight, contentDescription = "Arrow",
             tint = Themer.colors.Black100
         )
     }
